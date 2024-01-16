@@ -50,11 +50,20 @@ const icons = [
 const MenuListItems = () => {
   const navigate = useNavigate()
   return (
-      <List>
+      <List >
     {icons.map((item, index) => (
-      <ListItem key={index} disablePadding onClick={()=> navigate(item.url)}>
+      <ListItem 
+      sx={{
+        color: "white",
+        "&:hover": { color: "red" },
+        "&:hover .MuiSvgIcon-root": { color: "red" },
+        "& .MuiSvgIcon-root": { color: "white" },
+      }}
+        
+      key={index} 
+      disablePadding onClick={()=> navigate(item.url)}>
         <ListItemButton>
-          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemIcon sx={{color: "white"}}>{item.icon}</ListItemIcon>
           <ListItemText primary={item.title} />
         </ListItemButton>
       </ListItem>
