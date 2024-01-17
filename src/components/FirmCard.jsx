@@ -7,11 +7,13 @@ import Typography from '@mui/material/Typography';
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import EditIcon from "@mui/icons-material/Edit"
 import { btnStyle } from '../styles/globalStyles';
+import useStockCalls from '../service/useStockCalls';
 
 
 
 export default function FirmCard({ firm }) {
     const {address, image, name, phone, _id} = firm
+    const {deleteStock}= useStockCalls()
   return (
     <Card sx={{ maxWidth: 345, display:"flex", flexDirection:"column", alignItems:"center" , justifyContent:"space-between", p:2 , width:"300px", height:"400px" }}>
        <CardContent>
@@ -27,7 +29,7 @@ export default function FirmCard({ firm }) {
           {phone}
         </Typography>
       <CardActions>
-        <DeleteOutlineIcon sx={btnStyle}/>
+        <DeleteOutlineIcon sx={btnStyle} onClick={()=> deleteStock("firms", _id)}/>
         <EditIcon sx={btnStyle}/>
       </CardActions>
     </Card>
