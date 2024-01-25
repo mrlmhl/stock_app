@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
 import { useSelector } from 'react-redux';
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import useStockCalls from '../service/useStockCalls';
@@ -14,7 +14,9 @@ export default function ProductTable() {
       { field: '_id', 
         headerName: '#', 
         flex:1.4, 
-        headerAlign:"center" , 
+        headerAlign:"center" ,
+        align: "center", 
+        minWidht: "150px",
         sortable: false,
       },
       {
@@ -22,6 +24,7 @@ export default function ProductTable() {
         headerName: 'Category',
         flex:1,
         headerAlign:"center",
+        align: "center",
         valueGetter: (props)=>{
           // console.log(props);
           return props.row?.categoryId?.name
@@ -32,13 +35,14 @@ export default function ProductTable() {
         headerName: 'Brand',
         flex:1.2,
         headerAlign:"center",
+        align: "center",
         valueGetter: (props)=>props.row?.brandId?.name,
       },
       {
         field: 'name',
         headerName: 'Name',
         flex:1.5,
-        
+        align: "center",
         headerAlign:"center"
       },
     
@@ -48,11 +52,15 @@ export default function ProductTable() {
         type: 'number',
         flex:1.5,
         
-        headerAlign:"center"
+        headerAlign:"center",
+        align: "center",
       },
        {
           field: 'actions',
           type: 'actions',
+          headerName: "Actions",
+          headerAlign: "center",
+          align: "center",
           getActions: (props) => [
               <GridActionsCellItem 
               icon={<DeleteForeverIcon/>} 
@@ -73,17 +81,11 @@ export default function ProductTable() {
       autoHeight
         rows={products}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[5, 10 ,20, 50, 100]}
         checkboxSelection
         disableRowSelectionOnClick
         getRowId={getRowId}
+        slots={{ toolbar: GridToolbar }}
       />
     </Box>
   );

@@ -7,10 +7,11 @@ import { useSelector } from 'react-redux'
 import { Grid } from '@mui/material'
 import FirmCard from '../components/FirmCard'
 import FirmModal from '../components/FirmModal'
+import TableSkeleton, { CardSkeleton, ErrorMsg, NoDataMsg } from '../components/DataFetchMsg'
 
 const Firms = () => {
   const {getStocks} = useStockCalls()
-  const {firms} = useSelector((state)=> state.stock)
+  const {firms, error, loading} = useSelector((state)=> state.stock)
 
   const [info, setInfo] =useState({
     
@@ -45,7 +46,16 @@ const Firms = () => {
       <Button variant='contained' onClick={handleOpen} >New Firm</Button>
 
       <FirmModal open={open} handleClose={handleClose} info={info} setInfo={setInfo}/>
+        
+      {error && <ErrorMsg/>}
+      {loading && (
+         <CardSkeleton>
+          <FirmCard/>
 
+         </CardSkeleton>)}
+
+      {!error &&!loading && !firms.length && <NoDataMsg/>}
+      {!loading && !error && !firms.length > 0  && ( 
       <Grid container gap={3} mt={3}justifyContent={"center"} >
         {firms?.map((firm)=> (
           <Grid item key={firm._id}>
@@ -54,6 +64,11 @@ const Firms = () => {
           </Grid>
         ))}
       </Grid>
+      )}
+
+
+
+     
     </div>
   )
 }
