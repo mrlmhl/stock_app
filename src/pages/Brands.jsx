@@ -4,12 +4,12 @@ import { useSelector } from "react-redux"
 import BrandCard from "../components/BrandCard"
 import BrandModal from "../components/BrandModal"
 import useStockCalls from "../service/useStockCalls"
- //import { CardSkeleton, ErrorMsg, NoDataMsg } from "../components/DataFetchMsg"
+import { CardSkeleton, ErrorMsg, NoDataMsg } from "../components/DataFetchMsg"
 
 const Brands = () => {
   const { getStocks } = useStockCalls()
   const { brands, loading, error } = useSelector((state) => state.stock)
-console.log(brands);
+
   const [info, setInfo] = useState({ name: "", image: "" })
 
   const [open, setOpen] = useState(false)
@@ -40,15 +40,15 @@ console.log(brands);
         setInfo={setInfo}
       />
 
-      {/* {error && <ErrorMsg />} */}
+      {error && <ErrorMsg />}
 
-      {/* {loading && (
+      {loading && (
         <CardSkeleton>
           <BrandCard />
         </CardSkeleton>
-      )} */}
-{/* 
-      {!loading && !brands?.length && <NoDataMsg />} */}
+      )}
+
+      {!loading && !brands?.length && <NoDataMsg />}
 
       {!loading && brands?.length > 0 && (
         <Grid container justifyContent={"center"} gap={2} mt={4}>

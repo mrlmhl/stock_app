@@ -28,7 +28,7 @@ const Products = () => {
   }
 
   useEffect(() => {
-    // getFirms()
+    
    
     getStocks("products")
     getStocks("categories")

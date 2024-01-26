@@ -1,7 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-  firms: [],
   products: [],
   purchases: [],
   brands: [],
@@ -9,47 +8,55 @@ const initialState = {
   categories: [],
   loading: false,
   error: false,
-  
-
+  firms: [],
 }
 
 const stockSlice = createSlice({
   name: "stock",
   initialState,
   reducers: {
-    fetchStart:(state)=>{
-      state.loading= true
+    fetchStart: (state) => {
+      state.error = false
+      state.loading = true
     },
-    // getFirmsSuccess: (state, {payload}) => {
-    //   state.firms =payload
+    // getFirmsSuccess: (state, { payload }) => {
+    //   state.firms = payload
     //   state.loading = false
     // },
-    // getSalesSuccess: (state, {payload}) => {
-    //   state.sales =payload
+    // getSalesSuccess: (state, { payload }) => {
+    //   state.sales = payload
     //   state.loading = false
     // },
-
-    //  getStockSuccess: (state, {payload:{url,apiData}} ) => {
-    //  state[url]= apiData
-    //   state.loading = false
-    // },
-    // getStockSuccess: (state, {payload:{ url, apiData }}) => {
+    // getStockSuccess: (state, { payload: { url, apiData } }) => {
     //   state[url] = apiData
     //   state.loading = false
     // },
-
     getStockSuccess: (state, action) => {
       state[action.payload.url] = action.payload.apiData
       state.loading = false
+      state.error = false
     },
-    fetchFail:(state)=>{
-      state.loading=false
-      state.error =true
-    }
+    getProPurBranFirmSuccess: (state, { payload }) => {
+      state.loading = false
+      state.products = payload[0]
+      state.purchases = payload[1]
+      state.brands = payload[2]
+      state.firms = payload[3]
+      state.error = false
+    },
 
-  }
-});
+    fetchFail: (state) => {
+      state.loading = false
+      state.error = true
+    },
+  },
+})
 
-export const { fetchStart, fetchFail, getStockSuccess} = stockSlice.actions
+export const {
+  fetchStart,
+  getStockSuccess,
+  getProPurBranFirmSuccess,
+  fetchFail,
+} = stockSlice.actions
 
 export default stockSlice.reducer
